@@ -143,19 +143,19 @@ enQuickWithdraw ReadQuickWithdraw(string Message = "\n\nChoose what do you want 
     return (enQuickWithdraw)ReadValidateShortInRange(Message, 1, 9);
 }
 
-vector<string> SplitEachWordToVector(string Text, string Sperator = "#//#")
+vector<string> SplitEachWordToVector(string Text, string Separator = "#//#")
 {
     vector<string> vContent;
     short Pos = 0;
     string sWord;
-    while ((Pos = Text.find(Sperator)) != std::string::npos)
+    while ((Pos = Text.find(Separator)) != std::string::npos)
     {
         sWord = Text.substr(0, Pos);
         if (sWord != "")
         {
             vContent.push_back(sWord);
         }
-        Text.erase(0, Pos + Sperator.length());
+        Text.erase(0, Pos + Separator.length());
     }
     if (Text != "")
     {
@@ -164,9 +164,9 @@ vector<string> SplitEachWordToVector(string Text, string Sperator = "#//#")
     return vContent;
 }
 
-stClient AssignEachPartToClientsStruct(string Text, string Sperator = "#//#")
+stClient AssignEachPartToClientsStruct(string Text, string Separator = "#//#")
 {
-    vector<string> vString = SplitEachWordToVector(Text, Sperator);
+    vector<string> vString = SplitEachWordToVector(Text, Separator);
     stClient Client;
     Client.AccountNumber = vString[0];
     Client.PinCode = vString[1];
@@ -211,25 +211,25 @@ bool CheckClientByAccountNumber(vector<stClient> vClients, string AccountNumber,
 void PrintClientCard(stClient Client)
 {
     cout << "\nThe following are the client details:\n";
-    cout << "\nAccout Number  : " << Client.AccountNumber;
+    cout << "\nAccount Number  : " << Client.AccountNumber;
     cout << "\nPin Code       : " << Client.PinCode;
     cout << "\nName           : " << Client.Name;
     cout << "\nPhone          : " << Client.Phone;
     cout << "\nAccount Balance: " << Client.AccountBalance;
 }
 
-string ConvertClientRecordToLine(stClient Client, string Seperator = "#//#")
+string ConvertClientRecordToLine(stClient Client, string Separator = "#//#")
 {
     string stClientRecord = "";
-    stClientRecord += Client.AccountNumber + Seperator;
-    stClientRecord += Client.PinCode + Seperator;
-    stClientRecord += Client.Name + Seperator;
-    stClientRecord += Client.Phone + Seperator;
+    stClientRecord += Client.AccountNumber + Separator;
+    stClientRecord += Client.PinCode + Separator;
+    stClientRecord += Client.Name + Separator;
+    stClientRecord += Client.Phone + Separator;
     stClientRecord += to_string(Client.AccountBalance);
     return stClientRecord;
 }
 
-vector<stClient> SaveCleintsDataToFile(string ClientsFileName, vector<stClient> &vClients)
+vector<stClient> SaveClientsDataToFile(string ClientsFileName, vector<stClient> &vClients)
 {
     fstream MyFile;
     MyFile.open(ClientsFileName, ios::out);
@@ -267,7 +267,7 @@ void Deposit(string FileName, vector<stClient> &vClients, stClient &sClient)
             {
                 C.AccountBalance += AmountOfDeposit;
                 EndAmount = C.AccountBalance;
-                vClients = SaveCleintsDataToFile(FileName, vClients);
+                vClients = SaveClientsDataToFile(FileName, vClients);
                 cout << "\nDeposit Added Successfully Account balance = " << EndAmount << "\n";
                 sClient.AccountBalance = EndAmount;
                 break;
@@ -309,8 +309,8 @@ void NormalWithdraw(string ClientsFileName, vector<stClient> &vClients, stClient
                     {
                         C.AccountBalance = C.AccountBalance - AmountOfWithdraw;
                         EndAmount = C.AccountBalance;
-                        vClients = SaveCleintsDataToFile(ClientsFileName, vClients);
-                        cout << "\nWithdrawed Successfully Account balance = " << EndAmount << "\n";
+                        vClients = SaveClientsDataToFile(ClientsFileName, vClients);
+                        cout << "\n Withrawend Successfully Account balance = " << EndAmount << "\n";
                         sClient.AccountBalance = EndAmount;
                         break;
                     }
@@ -362,8 +362,8 @@ void Withdraw(string ClientsFileName, vector<stClient> &vClients, stClient &sCli
                     {
                         C.AccountBalance = C.AccountBalance - AmountOfWithdraw;
                         EndAmount = C.AccountBalance;
-                        vClients = SaveCleintsDataToFile(ClientsFileName, vClients);
-                        cout << "\nWithdrawed Successfully Account balance = " << EndAmount << "\n";
+                        vClients = SaveClientsDataToFile(ClientsFileName, vClients);
+                        cout << "\n Withrawid Successfully Account balance = " << EndAmount << "\n";
                         sClient.AccountBalance = EndAmount;
                         break;
                     }
@@ -422,7 +422,7 @@ void QuickWithdraw(string ClientsFileName, vector<stClient> &vClients, stClient 
     Withdraw(ClientsFileName, vClients, sClient, AmountOfWithdraw);
 }
 
-bool CheckCorrctPinCode(stClient Client, string Password)
+bool CheckCorrectPinCode(stClient Client, string Password)
 {
     return Password == Client.PinCode;
 }
@@ -442,7 +442,7 @@ void LoginScreen(string ClientsFileName, vector<stClient> &vClients, stClient &C
     }
 
     string Password = ReadString("Enter Pin Code? ");
-    while (!CheckCorrctPinCode(Client, Password))
+    while (!CheckCorrectPinCode(Client, Password))
     {
         cout << "Incorrect Pin Code\n";
         Password = ReadString("Enter Pin Code? ");
