@@ -21,7 +21,7 @@ This is a simple ATM system developed in C++ with a focus on **Separation of Con
 ## 🔧 Installation & Usage
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/Yousef-Refat/ATM_System.git
+   git clone https://github.com/JooScript/ATM_System.git
    ```
 2. **Navigate to the project directory**:
    ```bash
